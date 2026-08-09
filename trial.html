@@ -200,7 +200,11 @@
         const dateStr = String(item['日付']).split('T')[0].replace(/-/g, '/');
         const d = new Date(dateStr);
         const isSpecial = item['特別補講'] && item['特別補講'] !== '';
-        const dateCondition = isSpecial ? (d >= today) : (d >= today && d <= limit);
+        
+        // 特別補講は無料体験では選択不可にするためリストから除外
+        if (isSpecial) return false;
+        
+        const dateCondition = (d >= today && d <= limit);
         return (item['エリア'] === selectedArea) && !isNaN(d) && dateCondition;
       });
 
