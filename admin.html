@@ -1499,20 +1499,23 @@
             if (venue === 'とよの') defaultB = oldSalary;
           }
 
+          const getManual = (key, fallback) => (manualData[key] !== '' && manualData[key] !== undefined) ? Number(manualData[key]) : fallback;
+          const getManualEmptyIsZero = (key, fallback) => manualData[key] !== undefined ? Number(manualData[key]) : fallback;
+
           return {
             'isConfirmed': true,
-            '特別補講人数': manualData['特別補講人数'] !== undefined ? Number(manualData['特別補講人数']) : autoData['特別補講人数'],
-            '特別補講売上': manualData['特別補講売上'] !== undefined ? Number(manualData['特別補講売上']) : autoData['特別補講売上'],
-            '2時間人数': manualData['2時間人数'] !== undefined ? Number(manualData['2時間人数']) : autoData['2時間人数'],
-            '2時間売上': manualData['2時間売上'] !== undefined ? Number(manualData['2時間売上']) : autoData['2時間売上'],
-            '1時間30分人数': manualData['1時間30分人数'] !== undefined ? Number(manualData['1時間30分人数']) : autoData['1時間30分人数'],
-            '1時間30分売上': manualData['1時間30分売上'] !== undefined ? Number(manualData['1時間30分売上']) : autoData['1時間30分売上'],
-            '1時間人数': manualData['1時間人数'] !== undefined ? Number(manualData['1時間人数']) : autoData['1時間人数'],
-            '1時間売上': manualData['1時間売上'] !== undefined ? Number(manualData['1時間売上']) : autoData['1時間売上'],
-            '無料体験人数': manualData['無料体験人数'] !== undefined ? Number(manualData['無料体験人数']) : autoData['無料体験人数'],
-            'スタッフ給料A': manualData['スタッフ給料A'] !== undefined ? Number(manualData['スタッフ給料A']) : defaultA,
-            'スタッフ給料B': manualData['スタッフ給料B'] !== undefined ? Number(manualData['スタッフ給料B']) : defaultB,
-            '会場費': manualData['会場費'] !== undefined ? Number(manualData['会場費']) : autoData['会場費']
+            '特別補講人数': getManual('特別補講人数', autoData['特別補講人数']),
+            '特別補講売上': getManual('特別補講売上', autoData['特別補講売上']),
+            '2時間人数': getManual('2時間人数', autoData['2時間人数']),
+            '2時間売上': getManual('2時間売上', autoData['2時間売上']),
+            '1時間30分人数': getManual('1時間30分人数', autoData['1時間30分人数']),
+            '1時間30分売上': getManual('1時間30分売上', autoData['1時間30分売上']),
+            '1時間人数': getManual('1時間人数', autoData['1時間人数']),
+            '1時間売上': getManual('1時間売上', autoData['1時間売上']),
+            '無料体験人数': getManual('無料体験人数', autoData['無料体験人数']),
+            'スタッフ給料A': getManualEmptyIsZero('スタッフ給料A', defaultA),
+            'スタッフ給料B': getManualEmptyIsZero('スタッフ給料B', defaultB),
+            '会場費': getManualEmptyIsZero('会場費', autoData['会場費'])
           };
         }
         return { ...autoData, isConfirmed: false };
