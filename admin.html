@@ -375,15 +375,17 @@
           <thead>
             <tr>
               <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">区分</th>
-              <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">2時間</th>
-              <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">1.5時間</th>
-              <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">1時間</th>
-              <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">体験</th>
+              <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">補講</th>
+              <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">2h</th>
+              <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">1.5h</th>
+              <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">1h</th>
+              <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">無料</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td style="border: 1px solid #E2E8F0; padding: 6px; background: #F0FDF4; font-weight:bold; color:#166534;">おぶせ</td>
+              <td id="monthlyObuseSpCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyObuse2hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyObuse1_5hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyObuse1hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
@@ -391,13 +393,15 @@
             </tr>
             <tr>
               <td style="border: 1px solid #E2E8F0; padding: 6px; background: #FAF5FF; font-weight:bold; color:#6B21A8;">とよの</td>
+              <td id="monthlyToyonoSpCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyToyono2hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyToyono1_5hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyToyono1hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyToyonoFreeCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
             </tr>
             <tr style="background: #F1F5F9; font-weight:bold;">
-              <td style="border: 1px solid #E2E8F0; padding: 6px; color:#1E3A8A;">合計</td>
+              <td style="border: 1px solid #E2E8F0; padding: 6px; color:#1E3A8A;">計</td>
+              <td id="monthlyTotalSpCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyTotal2hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyTotal1_5hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyTotal1hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
@@ -1578,8 +1582,8 @@
         const toyonoSales = dailyData.toyono;
 
         // 売上確定（保存）されている場合のみ集計・表示を行う
-        const obuseProfit = obuseSales['isConfirmed'] ? (obuseSales['2時間売上'] + obuseSales['1時間30分売上'] + obuseSales['1時間売上'] - (obuseSales['スタッフ給料A'] + obuseSales['スタッフ給料B'] + obuseSales['会場費'])) : 0;
-        const toyonoProfit = toyonoSales['isConfirmed'] ? (toyonoSales['2時間売上'] + toyonoSales['1時間30分売上'] + toyonoSales['1時間売上'] - (toyonoSales['スタッフ給料A'] + toyonoSales['スタッフ給料B'] + toyonoSales['会場費'])) : 0;
+        const obuseProfit = obuseSales['isConfirmed'] ? (obuseSales['特別補講売上'] + obuseSales['2時間売上'] + obuseSales['1時間30分売上'] + obuseSales['1時間売上'] - (obuseSales['スタッフ給料A'] + obuseSales['スタッフ給料B'] + obuseSales['会場費'])) : 0;
+        const toyonoProfit = toyonoSales['isConfirmed'] ? (toyonoSales['特別補講売上'] + toyonoSales['2時間売上'] + toyonoSales['1時間30分売上'] + toyonoSales['1時間売上'] - (toyonoSales['スタッフ給料A'] + toyonoSales['スタッフ給料B'] + toyonoSales['会場費'])) : 0;
 
         const totalProfit = obuseProfit + toyonoProfit;
 
@@ -1589,15 +1593,17 @@
 
         const addStats = (venueKey, s) => {
           if (!s['isConfirmed']) return;
+          summaryTotals[venueKey].sp += s['特別補講人数'] || 0;
           summaryTotals[venueKey]['2h'] += s['2時間人数'] || 0;
           summaryTotals[venueKey]['1_5h'] += s['1時間30分人数'] || 0;
           summaryTotals[venueKey]['1h'] += s['1時間人数'] || 0;
           summaryTotals[venueKey].free += s['無料体験人数'] || 0;
-          const sales = (s['2時間売上'] || 0) + (s['1時間30分売上'] || 0) + (s['1時間売上'] || 0);
+          const sales = (s['特別補講売上'] || 0) + (s['2時間売上'] || 0) + (s['1時間30分売上'] || 0) + (s['1時間売上'] || 0);
           summaryTotals[venueKey].sales += sales;
           summaryTotals[venueKey].salary += ((s['スタッフ給料A'] || 0) + (s['スタッフ給料B'] || 0));
           summaryTotals[venueKey].venueFee += s['会場費'] || 0;
           
+          summaryTotals.total.sp += s['特別補講人数'] || 0;
           summaryTotals.total['2h'] += s['2時間人数'] || 0;
           summaryTotals.total['1_5h'] += s['1時間30分人数'] || 0;
           summaryTotals.total['1h'] += s['1時間人数'] || 0;
@@ -1642,6 +1648,7 @@
         document.getElementById(`monthly${venuePrefix}VenueFee`).textContent = `¥${stats.venueFee.toLocaleString()}`;
         document.getElementById(`monthly${venuePrefix}Profit`).textContent = `¥${profit.toLocaleString()}`;
         
+        document.getElementById(`monthly${venuePrefix}SpCount`).textContent = `${stats.sp} 名`;
         document.getElementById(`monthly${venuePrefix}2hCount`).textContent = `${stats['2h']} 名`;
         document.getElementById(`monthly${venuePrefix}1_5hCount`).textContent = `${stats['1_5h']} 名`;
         document.getElementById(`monthly${venuePrefix}1hCount`).textContent = `${stats['1h']} 名`;
