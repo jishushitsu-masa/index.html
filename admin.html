@@ -375,37 +375,37 @@
           <thead>
             <tr>
               <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">区分</th>
-              <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">補講</th>
               <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">2h</th>
               <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">1.5h</th>
               <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">1h</th>
-              <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">無料</th>
+              <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">体験</th>
+              <th style="border: 1px solid #E2E8F0; padding: 6px; background: #F8FAFC;">補講</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td style="border: 1px solid #E2E8F0; padding: 6px; background: #F0FDF4; font-weight:bold; color:#166534;">おぶせ</td>
-              <td id="monthlyObuseSpCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyObuse2hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyObuse1_5hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyObuse1hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyObuseFreeCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
+              <td id="monthlyObuseSpCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
             </tr>
             <tr>
               <td style="border: 1px solid #E2E8F0; padding: 6px; background: #FAF5FF; font-weight:bold; color:#6B21A8;">とよの</td>
-              <td id="monthlyToyonoSpCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyToyono2hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyToyono1_5hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyToyono1hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyToyonoFreeCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
+              <td id="monthlyToyonoSpCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
             </tr>
             <tr style="background: #F1F5F9; font-weight:bold;">
               <td style="border: 1px solid #E2E8F0; padding: 6px; color:#1E3A8A;">計</td>
-              <td id="monthlyTotalSpCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyTotal2hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyTotal1_5hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyTotal1hCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
               <td id="monthlyTotalFreeCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
+              <td id="monthlyTotalSpCount" style="border: 1px solid #E2E8F0; padding: 6px;">0 名</td>
             </tr>
           </tbody>
         </table>
@@ -1537,9 +1537,9 @@
       let monthlyProfit = 0, obuseMonthlyProfit = 0, toyonoMonthlyProfit = 0;
       
       const summaryTotals = {
-        obuse: { '2h': 0, '1_5h': 0, '1h': 0, free: 0, sales: 0, salary: 0, venueFee: 0 },
-        toyono: { '2h': 0, '1_5h': 0, '1h': 0, free: 0, sales: 0, salary: 0, venueFee: 0 },
-        total: { '2h': 0, '1_5h': 0, '1h': 0, free: 0, sales: 0, salary: 0, venueFee: 0 }
+        obuse: { sp: 0, '2h': 0, '1_5h': 0, '1h': 0, free: 0, sales: 0, salary: 0, venueFee: 0 },
+        toyono: { sp: 0, '2h': 0, '1_5h': 0, '1h': 0, free: 0, sales: 0, salary: 0, venueFee: 0 },
+        total: { sp: 0, '2h': 0, '1_5h': 0, '1h': 0, free: 0, sales: 0, salary: 0, venueFee: 0 }
       };
       
       for (let i = 0; i < firstDay; i++) {
